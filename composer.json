@@ -1,0 +1,41 @@
+{
+  "name": "marceltk/unisoft-pfbc",
+  "type": "library",
+  "description": "Módulo com classes para geração de formulários para o sistema",
+  "keywords": [
+    "Util"
+  ],
+  "license": "MIT",
+  "homepage": "https://www.unisoft.net.br/",
+  "authors": [
+    {
+      "name": "Marcel Silva",
+      "email": "phpmarcel@gmail.com",
+      "role": "Maintainer"
+    }
+  ],
+  "require": {
+    "php": "^5.3 || ^7.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.0"
+  },
+  "extra": {
+    "zf": {
+      "module": "Pfbc"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Pfbc\\": [
+        "src/",
+        "test/"
+      ]
+    }
+  },
+  "config": {
+    "bin-dir": "bin"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
