@@ -22,12 +22,12 @@
   },
   "extra": {
     "zf": {
-      "module": "Pfbc"
+      "module": "PFBC"
     }
   },
   "autoload": {
     "psr-4": {
-      "Pfbc\\": [
+      "PFBC\\": [
         "src/",
         "test/"
       ]
