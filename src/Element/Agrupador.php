@@ -70,40 +70,40 @@ class Agrupador extends \PFBC\Element
                   return false;
                 }
 
-				campos = $('#{$id_form_agrupador}-campos').val().split(',');
-				erroMsg = '';
-					if(campos.length > 0) {
-					erroMsg +='<div class=\"alert alert-danger alert-form\"><strong class=\"alert-heading\">Houveram alguns erros ao inserir registros no agrupador, veja abaixo:</strong>';
-									erroMsg +='<a href=\"#\" data-dismiss=\"alert\" class=\"close\">×</a>';
-					erroMsg +='<ul>';
-					$(campos).each(function(i,item){
+                campos = $('#{$id_form_agrupador}-campos').val().split(',');
+                erroMsg = '';
+                    if(campos.length > 0) {
+                    erroMsg +='<div class=\"alert alert-danger alert-form\"><strong class=\"alert-heading\">Houveram alguns erros ao inserir registros no agrupador, veja abaixo:</strong>';
+                                    erroMsg +='<a href=\"#\" data-dismiss=\"alert\" class=\"close\">×</a>';
+                    erroMsg +='<ul>';
+                    $(campos).each(function(i,item){
                         item = item+'_cmp';
                         if($('#'+item+'_texto').length) {
                             item_texto = item+'_texto';
                         }
-						if($('#'+item).hasClass('required') && (!$('#'+item).val() || $('#'+item).val() == '0,00')){
-							nomecampo = $(\"label[for=\"+item+\"] strong\").text();
+                        if($('#'+item).hasClass('required') && (!$('#'+item).val() || $('#'+item).val() == '0,00')){
+                            nomecampo = $(\"label[for=\"+item+\"] strong\").text();
                             if(!nomecampo) {
                                 nomecampo = $('#'+item).parent().children('label').text().replace('*','');
                                 if(!nomecampo){
                                     nomecampo = $('#'+item_texto).parent().parent().parent().children('label').text().replace('*','');
                                 }
                             }
-							erroMsg += '<li>Erro: O campo <strong>'+nomecampo+'</strong> é de preenchimento obrigatório.</li>';
-							bErro = true;
-						}
-					});
-					erroMsg +='</ul></div>';
-				}
-				if(!bErro) {
-					$('#fieldset-{$id_form_agrupador} .alert').remove();
-					MsfwAgrupadorInsere('" . $id_form_agrupador . "',campos,id_form,'" . $this->rotina_pre . "','" . $this->rotina_pos . "');\n
-				} else {
-				$('#fieldset-{$id_form_agrupador} .alert').remove();
-				  $('#fieldset-{$id_form_agrupador}').prepend(erroMsg);
-				}
+                            erroMsg += '<li>Erro: O campo <strong>'+nomecampo+'</strong> é de preenchimento obrigatório.</li>';
+                            bErro = true;
+                        }
+                    });
+                    erroMsg +='</ul></div>';
+                }
+                if(!bErro) {
+                    $('#fieldset-{$id_form_agrupador} .alert').remove();
+                    MsfwAgrupadorInsere('" . $id_form_agrupador . "',campos,id_form,'" . $this->rotina_pre . "','" . $this->rotina_pos . "');\n
+                } else {
+                $('#fieldset-{$id_form_agrupador} .alert').remove();
+                  $('#fieldset-{$id_form_agrupador}').prepend(erroMsg);
+                }
 
-			});";
+            });";
         }
 
         /**
@@ -112,98 +112,98 @@ class Agrupador extends \PFBC\Element
         if ($this->ide_permite_alteracao) {
             echo "$('#" . $id_form_agrupador . "-alterar').click(function(){
 
-				var id_linha = $(this).attr('rel');
-				campos = $('#{$id_form_agrupador}-campos').val().split(',');
-				bErro = false;
-				erroMsg = '';
+                var id_linha = $(this).attr('rel');
+                campos = $('#{$id_form_agrupador}-campos').val().split(',');
+                bErro = false;
+                erroMsg = '';
 
-					if(campos.length > 0) {
-					erroMsg +='<div class=\"alert alert-danger alert-form\"><strong class=\"alert-heading\">Houveram alguns erros ao alterar registros no agrupador, veja abaixo:</strong>';
-									erroMsg +='<a href=\"#\" data-dismiss=\"alert\" class=\"close\">×</a>';
-					erroMsg +='<ul>';
-					$(campos).each(function(i,item){
+                    if(campos.length > 0) {
+                    erroMsg +='<div class=\"alert alert-danger alert-form\"><strong class=\"alert-heading\">Houveram alguns erros ao alterar registros no agrupador, veja abaixo:</strong>';
+                                    erroMsg +='<a href=\"#\" data-dismiss=\"alert\" class=\"close\">×</a>';
+                    erroMsg +='<ul>';
+                    $(campos).each(function(i,item){
                         item = item+'_cmp';
                         if($('#'+item+'_texto').length) {
                             item_texto = item+'_texto';
                         }
-						if($('#'+item).hasClass('required') && (!$('#'+item).val() || $('#'+item).val() == '0,00')){
-							nomecampo = $(\"label[for=\"+item+\"] strong\").text();
+                        if($('#'+item).hasClass('required') && (!$('#'+item).val() || $('#'+item).val() == '0,00')){
+                            nomecampo = $(\"label[for=\"+item+\"] strong\").text();
                             if(!nomecampo) {
                                 nomecampo = $('#'+item).parent().children('label').text().replace('*','');
                                 if(!nomecampo){
                                     nomecampo = $('#'+item_texto).parent().parent().parent().children('label').text().replace('*','');
                                 }
                             }
-							erroMsg += '<li>Erro: O campo <strong>'+nomecampo+'</strong> é de preenchimento obrigatório.</li>';
-							bErro = true;
-						}
-					});
-					erroMsg +='</ul></div>';
-				}
-				if(!bErro) {
-					//MsfwExecutaRotinaMVC('" . $this->rotina_pre . "',campos_form);\n
+                            erroMsg += '<li>Erro: O campo <strong>'+nomecampo+'</strong> é de preenchimento obrigatório.</li>';
+                            bErro = true;
+                        }
+                    });
+                    erroMsg +='</ul></div>';
+                }
+                if(!bErro) {
+                    //MsfwExecutaRotinaMVC('" . $this->rotina_pre . "',campos_form);\n
 
-					$('#fieldset-{$id_form_agrupador} .alert').remove();
-					MsfwAgrupadorAlterar('" . $id_form_agrupador . "',id_linha,campos,id_form,'" . $this->rotina_pre . "','" . $this->rotina_pos . "');
+                    $('#fieldset-{$id_form_agrupador} .alert').remove();
+                    MsfwAgrupadorAlterar('" . $id_form_agrupador . "',id_linha,campos,id_form,'" . $this->rotina_pre . "','" . $this->rotina_pos . "');
 
-					//MsfwExecutaRotinaMVC('" . $this->rotina_pos . "',campos_form);\n
+                    //MsfwExecutaRotinaMVC('" . $this->rotina_pos . "',campos_form);\n
 
-					if(ide_permite_inclusao == 'S') {
-						$('#" . $id_form_agrupador . "-inserir').show();
-						$('#" . $id_form_agrupador . "-alterar').hide();
-					} else {
-						$('#div-" . $id_form_agrupador . "').hide();
-					}
+                    if(ide_permite_inclusao == 'S') {
+                        $('#" . $id_form_agrupador . "-inserir').show();
+                        $('#" . $id_form_agrupador . "-alterar').hide();
+                    } else {
+                        $('#div-" . $id_form_agrupador . "').hide();
+                    }
 
-				} else {
-					$('#fieldset-{$id_form_agrupador} .alert').remove();
-				  $('#fieldset-{$id_form_agrupador}').prepend(erroMsg);
-				}
+                } else {
+                    $('#fieldset-{$id_form_agrupador} .alert').remove();
+                  $('#fieldset-{$id_form_agrupador}').prepend(erroMsg);
+                }
 
-			});";
+            });";
         }
 
         /**
          * Botão cancelar
          **/
         echo "$('#" . $id_form_agrupador . "-cancelar').click(function(){
-			showLoading();
-     		campos = $('#{$id_form_agrupador}-campos').val().split(',');
-			$('#fieldset-{$id_form_agrupador} .alert').remove(); // remove a div de erro quando clicado em cancelar.
-			$(campos).each(function(i,item){
+            showLoading();
+            campos = $('#{$id_form_agrupador}-campos').val().split(',');
+            $('#fieldset-{$id_form_agrupador} .alert').remove(); // remove a div de erro quando clicado em cancelar.
+            $(campos).each(function(i,item){
                 $(\"#\"+item+\"_cmp\").val('').trigger('change');
-				$(\"#\"+item+\"_cmp_texto\").val('');
-				if(ide_permite_inclusao == 'S') {
-					$('#" . $id_form_agrupador . "-inserir').show();
-					$('#" . $id_form_agrupador . "-alterar').hide();
-				} else {
-					$('#div-" . $id_form_agrupador . "').hide();
-				}
-			});
-			//$('input:text').setMask();
+                $(\"#\"+item+\"_cmp_texto\").val('');
+                if(ide_permite_inclusao == 'S') {
+                    $('#" . $id_form_agrupador . "-inserir').show();
+                    $('#" . $id_form_agrupador . "-alterar').hide();
+                } else {
+                    $('#div-" . $id_form_agrupador . "').hide();
+                }
+            });
+            //$('input:text').setMask();
             initMasks();
-			hideLoading();
-		});";
+            hideLoading();
+        });";
 
         //echo "MsfwbindDeleteAgrupador('".$id_form_agrupador."','".$this->Form->getAttribute('id')."','". $this->rotina_pre ."','". $this->rotina_pos ."');\n";
 
         echo "$('.excluir-linha-" . $id_form_agrupador . "').click(function(){
-			MsfwAgrupadorDeleta('" . $id_form_agrupador . "',$(this).attr('rel'),'" . $this->ide_permite_exclusao . "');
+            MsfwAgrupadorDeleta('" . $id_form_agrupador . "',$(this).attr('rel'),'" . $this->ide_permite_exclusao . "');
 
-			//$('form .btn').addClass('disabled');
-			//$('form .btn').attr('disabled','disabled');
+            //$('form .btn').addClass('disabled');
+            //$('form .btn').attr('disabled','disabled');
 
-			campos_form = $('#'+id_form).serialize();
-			MsfwExecutaRotinaMVC('" . $this->rotina_pre . "',campos_form+'&evento=before&acao=delete');\n
-			MsfwExecutaRotinaMVC('" . $this->rotina_pos . "',campos_form+'&evento=after&acao=delete');\n
+            campos_form = $('#'+id_form).serialize();
+            MsfwExecutaRotinaMVC('" . $this->rotina_pre . "',campos_form+'&evento=before&acao=delete');\n
+            MsfwExecutaRotinaMVC('" . $this->rotina_pos . "',campos_form+'&evento=after&acao=delete');\n
             //$('#" . $id_form_agrupador . "_agrupador_id_linha_'+$(this).attr('rel')).remove();
 
-			//$('form .btn').removeClass('disabled');
-			//$('form .btn').removeAttr('disabled');
-			//$('input:text').setMask();
+            //$('form .btn').removeClass('disabled');
+            //$('form .btn').removeAttr('disabled');
+            //$('input:text').setMask();
             initMasks();
-			hideLoading();
-		});";
+            hideLoading();
+        });";
 
         parent::renderJs();
     }
@@ -272,6 +272,9 @@ class Agrupador extends \PFBC\Element
         echo "<div class='content-agrupador' " . $style . ">";
         echo "<a id='ancora-" . $this->getAttribute('id') . "'></a>";
 
+        $campos = null;
+        $cfg = null;
+
         if (!$this->getAttribute('readonly')) {
             //$Form = $this->_form->serviceLocator->get("PFBC\Form");
             $Form = new \PFBC\Form(null, "div-" . $id_form_agrupador);
@@ -297,17 +300,26 @@ class Agrupador extends \PFBC\Element
             }
 
             $Form->addElement(new \PFBC\Element\Button(
-                                  "<span class='glyphicon glyphicon-floppy-disk'></span> Inserir", 'button', ["class" => "btn btn-xs btn-default btn-embossed", 'id' => $id_form_agrupador . "-inserir"]
+                                  "<span class='glyphicon glyphicon-floppy-disk'></span> Inserir", 'button', [
+                                                                                                     "class" => "btn btn-xs btn-default btn-embossed",
+                                                                                                     'id' => $id_form_agrupador . "-inserir",
+                                                                                                 ]
                               )
             );
 
             $Form->addElement(new \PFBC\Element\Button(
-                                  "<span class='glyphicon glyphicon-edit'></span> Alterar", 'button', ["class" => "btn btn-xs btn-default btn-embossed hidden", 'id' => $id_form_agrupador . "-alterar"]
+                                  "<span class='glyphicon glyphicon-edit'></span> Alterar", 'button', [
+                                                                                              "class" => "btn btn-xs btn-default btn-embossed hidden",
+                                                                                              'id' => $id_form_agrupador . "-alterar",
+                                                                                          ]
                               )
             );
 
             $Form->addElement(new \PFBC\Element\Button(
-                                  "<span class='glyphicon glyphicon-minus'></span> Cancelar", 'button', ["class" => "btn btn-xs btn-default btn-embossed", 'id' => $id_form_agrupador . "-cancelar"]
+                                  "<span class='glyphicon glyphicon-minus'></span> Cancelar", 'button', [
+                                                                                                "class" => "btn btn-xs btn-default btn-embossed",
+                                                                                                'id' => $id_form_agrupador . "-cancelar",
+                                                                                            ]
                               )
             );
 
@@ -331,8 +343,8 @@ class Agrupador extends \PFBC\Element
          * Quando existir uma entidade relacionada pegamos todos os valores, isso vem do Util, mas poderá ser enviado separadamente quando necessário criar um formulário personalizado.
          */
         if (is_object($this->entity)) {
-            $classe = $this->Util->getDoctrineFieldName($this->tabela);
-            $front = $this->frontController;
+            //            $classe = $this->Util->getDoctrineFieldName($this->tabela);
+            //            $front = $this->frontController;
 
             $em = $this->frontController->getServiceLocator()->get('Doctrine\ORM\EntityManager');
             $ordem = " id ASC";
@@ -346,14 +358,27 @@ class Agrupador extends \PFBC\Element
                 $ordem = $dd_agrupador['ordem'];
                 if (is_array($ordem)) {
                     foreach ($ordem as $campo => $direcao) {
-                        $ordem_tmp[] .= $campo . " " . $direcao;
+                        $ordem_tmp[] = $campo . " " . $direcao;
                     }
                     $ordem = implode(",", $ordem_tmp);
                     unset($ordem_tmp);
                 }
             }
 
-            $sql = "SELECT " . ($campos ? "id," . $campos : "id") . " FROM " . $this->tabela . " WHERE " . $this->tabela_campo . " = " . $this->entity->getId() . " ORDER BY " . $ordem;
+            $sql = "SELECT " . ($campos ? "id," . $campos : "id") . " FROM " . $this->tabela . " WHERE " .
+                   $this->tabela_campo . " = " . $this->entity->getId();
+
+            /**
+             * Implementação do Deleted At - 02/05/2018
+             **/
+            if (class_exists('Application\Util\SoftDeleteAble')) {
+                if (\Application\Util\SoftDeleteAble::isApplySoftDeleteAble($em, $this->tabela)) {
+                    $sql .= \Application\Util\SoftDeleteAble::getSqlAndDeleteAble();
+                }
+            }
+
+            $sql .= " ORDER BY " . $ordem;
+
             $query = $em->getConnection()->prepare($sql);
 
             try {
