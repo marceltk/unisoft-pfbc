@@ -58,7 +58,7 @@ class Upload extends \PFBC\Element
             $this->append = '<a href="javascript:void(0)" class="btn btn-link btn-xs" onclick="MsfwUpload(\'' . $this->_attributes['id'] . '\');"><span class="glyphicon glyphicon-open"></span></a>';
         } else {
             //$this->append = "<button type='button' class='btn btn-default btn-sm disabled' disabled='disabled'><i class='icon-arrow-up'></i></button>";
-            $this->append = '<a href="javascript:void(0)" class="btn btn-link btn-xs"><span class="glyphicon glyphicon-open"></span></a>';
+            $this->append = '<a href="javascript:void(0)" class="btn btn-link btn-xs disabled"><span class="glyphicon glyphicon-open"></span></a>';
         }
 
         // Efetua o download do arquivo/imagem que está em anexo.
@@ -77,7 +77,7 @@ class Upload extends \PFBC\Element
             $this->append .= '<a href="javascript:void(0)" class="btn btn-link btn-xs" onclick="MsfwExcluiUpload(\'' . $this->_attributes['id'] . '\',\'' . $id_upload . '\');"><span class="glyphicon glyphicon-remove"></span></a>';
         } else {
             //$this->append .= "<button type='button' class='btn btn-default btn-danger btn-sm disabled' disabled='disabled'><i class='glyphicon glyphicon-trash icon-white'></i></button>";
-            $this->append .= '<a href="javascript:void(0)" class="btn btn-link btn-xs"><span class="glyphicon glyphicon-remove"></span></a>';
+            $this->append .= '<a href="javascript:void(0)" class="btn btn-link btn-xs disabled"><span class="glyphicon glyphicon-remove"></span></a>';
         }
 
         if (in_array($this->_ext, ['png', 'jpg', 'gif', 'jpeg'])) {
