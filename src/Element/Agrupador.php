@@ -26,6 +26,7 @@ class Agrupador extends \PFBC\Element
         if ($dd) {
             $this->dd = $dd;
         }
+        parent::setProperties($properties);
         parent::__construct($label, $name, $properties);
         $this->Util = new \Application\Controller\Plugin\CommonUtil();
     }
@@ -211,6 +212,10 @@ class Agrupador extends \PFBC\Element
     public function render()
     {
         $id_form_agrupador = $this->getAttribute('id');
+
+        $properties = $this->getProperties();
+        $entitymanagerName = $properties['entitymanager'] ? $properties['entitymanager'] : self::ENTITY_MANAGER_NAME;
+
         $titles = [];
 
         // tabela do agrupador.
@@ -283,9 +288,9 @@ class Agrupador extends \PFBC\Element
             //$Form->setIdForm("div-" . $id_form_agrupador);
 
             $Form->configure([
-                                 "action" => '',
-                                 'view' => new \PFBC\View\Agrupador(),
-                             ]);
+                "action" => '',
+                'view' => new \PFBC\View\Agrupador(),
+            ]);
 
             //$em = $this->frontController->getServiceLocator()->get('Doctrine\ORM\EntityManager');
             $Form->serviceLocator = $this->frontController->getServiceLocator();
@@ -300,27 +305,27 @@ class Agrupador extends \PFBC\Element
             }
 
             $Form->addElement(new \PFBC\Element\Button(
-                                  "<span class='glyphicon glyphicon-floppy-disk'></span> Inserir", 'button', [
-                                                                                                     "class" => "btn btn-xs btn-default btn-embossed",
-                                                                                                     'id' => $id_form_agrupador . "-inserir",
-                                                                                                 ]
-                              )
+                    "<span class='glyphicon glyphicon-floppy-disk'></span> Inserir", 'button', [
+                        "class" => "btn btn-xs btn-default btn-embossed",
+                        'id' => $id_form_agrupador . "-inserir",
+                    ]
+                )
             );
 
             $Form->addElement(new \PFBC\Element\Button(
-                                  "<span class='glyphicon glyphicon-edit'></span> Alterar", 'button', [
-                                                                                              "class" => "btn btn-xs btn-default btn-embossed hidden",
-                                                                                              'id' => $id_form_agrupador . "-alterar",
-                                                                                          ]
-                              )
+                    "<span class='glyphicon glyphicon-edit'></span> Alterar", 'button', [
+                        "class" => "btn btn-xs btn-default btn-embossed hidden",
+                        'id' => $id_form_agrupador . "-alterar",
+                    ]
+                )
             );
 
             $Form->addElement(new \PFBC\Element\Button(
-                                  "<span class='glyphicon glyphicon-minus'></span> Cancelar", 'button', [
-                                                                                                "class" => "btn btn-xs btn-default btn-embossed",
-                                                                                                'id' => $id_form_agrupador . "-cancelar",
-                                                                                            ]
-                              )
+                    "<span class='glyphicon glyphicon-minus'></span> Cancelar", 'button', [
+                        "class" => "btn btn-xs btn-default btn-embossed",
+                        'id' => $id_form_agrupador . "-cancelar",
+                    ]
+                )
             );
 
             //$Form->addElement(new Element_Button("<i class='icon-white icon-pencil'></i>Alterar", 'button', array("class" => "btn-info btn-mini", "onclick" => "MsfwAgrupadorAltera('" . $id_form_agrupador . "')")));
@@ -343,10 +348,8 @@ class Agrupador extends \PFBC\Element
          * Quando existir uma entidade relacionada pegamos todos os valores, isso vem do Util, mas poderá ser enviado separadamente quando necessário criar um formulário personalizado.
          */
         if (is_object($this->entity)) {
-            //            $classe = $this->Util->getDoctrineFieldName($this->tabela);
-            //            $front = $this->frontController;
 
-            $em = $this->frontController->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+            $em = $this->frontController->getServiceLocator()->get($entitymanagerName);
             $ordem = " id ASC";
 
             /***
@@ -366,7 +369,7 @@ class Agrupador extends \PFBC\Element
             }
 
             $sql = "SELECT " . ($campos ? "id," . $campos : "id") . " FROM " . $this->tabela . " WHERE " .
-                   $this->tabela_campo . " = " . $this->entity->getId();
+                $this->tabela_campo . " = " . $this->entity->getId();
 
             /**
              * Implementação do Deleted At - 02/05/2018
@@ -397,9 +400,9 @@ class Agrupador extends \PFBC\Element
         echo "<input type='hidden' name='" . $this->getAttribute('name') . "' id='" . $this->getAttribute('id') . "' value='" . (count($itens) > 0 ? count($itens) : null) . "' />";
 
         // Quantidades Minima e Máxima
-        echo "<input type='hidden' name='agr_qtde_minima_" . $this->getAttribute('name') . "' id='agr_qtde_minima_" . $this->getAttribute('id') . "' value='" . (int) $dd_agrupador['complementos']['qtde_minima'] . "' />";
+        echo "<input type='hidden' name='agr_qtde_minima_" . $this->getAttribute('name') . "' id='agr_qtde_minima_" . $this->getAttribute('id') . "' value='" . (int)$dd_agrupador['complementos']['qtde_minima'] . "' />";
 
-        echo "<input type='hidden' name='agr_qtde_maxima_" . $this->getAttribute('name') . "' id='agr_qtde_maxima_" . $this->getAttribute('id') . "' value='" . (int) $dd_agrupador['complementos']['qtde_maxima'] . "' />";
+        echo "<input type='hidden' name='agr_qtde_maxima_" . $this->getAttribute('name') . "' id='agr_qtde_maxima_" . $this->getAttribute('id') . "' value='" . (int)$dd_agrupador['complementos']['qtde_maxima'] . "' />";
 
         if ($this->ide_permite_inclusao == "S") {
             echo "<script type='text/javascript'>MsfwAgrupadorMostraCampos('" . $id_form_agrupador . "')</script>";
@@ -500,8 +503,8 @@ class Agrupador extends \PFBC\Element
                     }
 
                     $table .= "<td valign='middle'>" .
-                              ((!empty($Item[$campo]) || $Item[$campo] == "0") ? "<span>" . $Item[$campo] . "</span>" : '<span>--</span>') .
-                              "<input type='hidden' name='" . $campo . "[]' id='" . $campo . "_" . $Item['id'] . "' value='" . $valor_original_campo . "' />";
+                        ((!empty($Item[$campo]) || $Item[$campo] == "0") ? "<span>" . $Item[$campo] . "</span>" : '<span>--</span>') .
+                        "<input type='hidden' name='" . $campo . "[]' id='" . $campo . "_" . $Item['id'] . "' value='" . $valor_original_campo . "' />";
                     // Para campos Upload
                     if ($nome_arquivo) {
                         $table .= "<input type='hidden' name='" . $campo . "_texto[]' id='" . $campo . "_texto_" . $Item['id'] . "' value='" . $nome_arquivo . "' />";

@@ -2,8 +2,12 @@
 
 namespace PFBC;
 
+use Application\Util\ApplicationOptions;
+
 abstract class Element extends Base
 {
+
+    const ENTITY_MANAGER_NAME = ApplicationOptions::ENTITY_MANAGER_NAME;
 
     protected $_errors = [];
     protected $_attributes = [];
@@ -15,6 +19,8 @@ abstract class Element extends Base
     protected $agrupado_em; // marcel
     protected $complementos; // marcel
     protected $_dd; // marcel
+
+    protected $properties; // marcel
 
     public function __construct($label, $name, array $properties = null, $objeto = null)
     {
@@ -29,7 +35,18 @@ abstract class Element extends Base
             $configuration = array_merge($configuration, $properties);
         }
 
+        $this->setProperties($properties);
         $this->configure($configuration);
+    }
+
+    public function getProperties()
+    {
+        return $this->properties;
+    }
+
+    public function setProperties(array $properties)
+    {
+        $this->properties = $properties;
     }
 
     /**
