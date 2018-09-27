@@ -35,7 +35,7 @@ abstract class Element extends Base
             $configuration = array_merge($configuration, $properties);
         }
 
-        $this->setProperties($properties);
+        $this->setProperties((array) $properties);
         $this->configure($configuration);
     }
 
